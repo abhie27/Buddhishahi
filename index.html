@@ -12,188 +12,94 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Tiro+Devanagari+Marathi&family=Yatra+One&display=swap" rel="stylesheet">
     <title>बुद्धिशाही! | A Celebration of Marathi Culture</title>
     <style>
-        html {
-            scroll-behavior: smooth; /* Enables smooth scrolling for the whole page */
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .logo-font {
-            font-family: 'Tiro Devanagari Marathi', serif;
-        }
-        .artistic-font {
-            font-family: 'Yatra One', cursive;
-        }
-        /* Custom utility to hide scrollbars */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-        }
-        /* Style for the full-screen hero section */
-        .hero-section {
-            background-image: url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=2070&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-        }
-        
-        /* Continuous scroll animation */
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        .animate-scroll {
-            animation: scroll 40s linear infinite;
-        }
-        .paused {
-            animation-play-state: paused;
-        }
-
-        /* Lightbox styles */
-        .lightbox {
-            transition: opacity 0.3s ease;
-        }
-        .lightbox img {
-            transition: transform 0.3s ease;
-            max-width: 85vw;
-            max-height: 80vh;
-        }
-
-        /* --- Scramble Typing Effect --- */
-        .animated-heading {
-            position: relative;
-            display: inline-block;
-        }
-        .animated-heading span {
-            display: inline-block;
-            min-width: 0.5em; 
-            text-align: center;
-            transition: color 0.1s ease-in-out, opacity 0.3s ease-in-out;
-        }
-        .animated-heading.typing-done {
-            transition: text-shadow 0.4s ease-in-out; 
-            cursor: pointer;
-        }
-        .animated-heading.typing-done:hover {
-            text-shadow: 0 0 8px var(--glow-color, #ffffff), 
-                            0 0 20px var(--glow-color, #ffffff);
-        }
-        .subheading {
-            color: #ccc;
-            margin-top: 1rem;
-            letter-spacing: 0.2em;
-            opacity: 0;
-            transition: opacity 1.5s ease-out;
-        }
-        .particle {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-        }
-        /* Form validation styles */
-        .form-error {
-            color: #ef4444; /* red-500 */
-            font-size: 0.875rem;
-            margin-top: 0.25rem;
-        }
-        .message-box {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            max-width: 90vw;
-            text-align: center;
-        }
-        .message-box button {
-            margin-top: 15px;
-            padding: 8px 20px;
-            background-color: #f59e0b; /* amber-500 */
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        .message-box button:hover {
-            background-color: #d97706; /* amber-600 */
-        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; }
+        .logo-font { font-family: 'Tiro Devanagari Marathi', serif; }
+        .artistic-font { font-family: 'Yatra One', cursive; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .hero-section { background-image: url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=2070&auto=format&fit=crop'); background-size: cover; background-position: center; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .animate-scroll { animation: scroll 40s linear infinite; }
+        .paused { animation-play-state: paused; }
+        .lightbox { transition: opacity 0.3s ease; }
+        .lightbox img { transition: transform 0.3s ease; max-width: 85vw; max-height: 80vh; }
+        .animated-heading { position: relative; display: inline-block; }
+        .animated-heading span { display: inline-block; min-width: 0.5em; text-align: center; transition: color 0.1s ease-in-out, opacity 0.3s ease-in-out; }
+        .animated-heading.typing-done { transition: text-shadow 0.4s ease-in-out; cursor: pointer; }
+        .animated-heading.typing-done:hover { text-shadow: 0 0 8px var(--glow-color, #ffffff), 0 0 20px var(--glow-color, #ffffff); }
+        .subheading { color: #ccc; margin-top: 1rem; letter-spacing: 0.2em; opacity: 0; transition: opacity 1.5s ease-out; }
+        .particle { position: absolute; background: white; border-radius: 50%; }
+        .form-error { color: #ef4444; font-size: 0.875rem; margin-top: 0.25rem; }
+        .message-box { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); z-index: 1000; display: none; flex-direction: column; align-items: center; justify-content: center; max-width: 90vw; text-align: center; }
+        .message-box button { margin-top: 15px; padding: 8px 20px; background-color: #f59e0b; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.2s; }
+        .message-box button:hover { background-color: #d97706; }
     </style>
     <!-- Firebase SDK (Version 11.6.1) -->
     <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc, addDoc, onSnapshot, collection, query, where, getDocs, serverTimestamp, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyB7hR31yI9qX5JoWXWTR21c2TZU7x_1arE",
-  authDomain: "buddhishahi-8cbe9.firebaseapp.com",
-  projectId: "buddhishahi-8cbe9",
-  storageBucket: "buddhishahi-8cbe9.firebasestorage.app",
-  messagingSenderId: "560420979947",
-  appId: "1:560420979947:web:5011cc7e362d0fad05aaae",
-  measurementId: "G-QE6MXGV84K"
-};
+        const firebaseConfig = {
+            apiKey: "AIzaSyB7hR31yI9qX5JoWXWTR21c2TZU7x_1arE",
+            authDomain: "buddhishahi-8cbe9.firebaseapp.com",
+            projectId: "buddhishahi-8cbe9",
+            storageBucket: "buddhishahi-8cbe9.appspot.com",
+            messagingSenderId: "560420979947",
+            appId: "1:560420979947:web:5011cc7e362d0fad05aaae",
+            measurementId: "G-QE6MXGV84K"
+        };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
-        // Global Firebase instances
-        window.firebaseApp = null;
-        window.db = null;
-        window.auth = null;
+        // Only initialize Firebase ONCE!
+        let app;
+        if (!getApps().length) {
+            app = initializeApp(firebaseConfig);
+        } else {
+            app = getApps()[0];
+        }
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        window.firebaseApp = app;
+        window.db = db;
+        window.auth = auth;
         window.userId = null;
-        window.appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        window.appId = typeof window.__app_id !== 'undefined' ? window.__app_id : 'default-app-id';
 
-        // Message Box function
         window.showMessageBox = (message) => {
             const msgBox = document.getElementById('message-box');
             const msgText = document.getElementById('message-box-text');
             msgText.textContent = message;
             msgBox.style.display = 'flex';
         };
-
         window.closeMessageBox = () => {
             document.getElementById('message-box').style.display = 'none';
         };
 
-        // Function to fetch user profile (display name, etc.) from Firestore
         async function fetchUserProfile(uid) {
             if (!window.db) return null;
-            // Corrected path: artifacts/{appId}/userProfiles/{userId}
             const userRef = doc(window.db, 'artifacts', window.appId, 'userProfiles', uid);
             try {
                 const userSnap = await getDoc(userRef);
-                if (userSnap.exists()) {
-                    return userSnap.data();
-                }
+                if (userSnap.exists()) return userSnap.data();
             } catch (error) {
                 console.error("Error fetching user profile:", error);
             }
             return null;
         }
+        window.fetchUserProfile = fetchUserProfile;
 
-        // Function to update auth UI based on login status and user profile
         async function updateAuthUI() {
             if (window.userId && window.auth.currentUser) {
                 const userProfile = await fetchUserProfile(window.userId);
                 const displayName = userProfile?.displayName || window.auth.currentUser.email || 'Guest User';
-
                 document.getElementById('auth-link').textContent = 'Logout';
                 document.getElementById('auth-link').dataset.action = 'logout';
                 document.getElementById('user-email-display').textContent = `Logged in as: ${displayName}`;
                 document.getElementById('user-email-display').classList.remove('hidden');
-
                 document.getElementById('auth-link-mobile').textContent = 'Logout';
                 document.getElementById('auth-link-mobile').dataset.action = 'logout';
                 document.getElementById('user-email-display-mobile').textContent = `Logged in as: ${displayName}`;
@@ -202,45 +108,48 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase
                 document.getElementById('auth-link').textContent = 'Login / Signup';
                 document.getElementById('auth-link').dataset.action = 'login';
                 document.getElementById('user-email-display').classList.add('hidden');
-
                 document.getElementById('auth-link-mobile').textContent = 'Login / Signup';
                 document.getElementById('auth-link-mobile').dataset.action = 'login';
                 document.getElementById('user-email-display-mobile').classList.add('hidden');
             }
         }
+        window.updateAuthUI = updateAuthUI;
+
+        window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+        window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+        window.signOut = signOut;
+        window.collection = collection;
+        window.addDoc = addDoc;
+        window.onSnapshot = onSnapshot;
+        window.serverTimestamp = serverTimestamp;
+        window.setDoc = setDoc;
+        window.doc = doc;
+        window.updateDoc = updateDoc;
+        window.deleteDoc = deleteDoc;
 
         document.addEventListener('DOMContentLoaded', async () => {
             try {
-                // Initialize Firebase
-                const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-                window.firebaseApp = initializeApp(firebaseConfig);
-                window.db = getFirestore(window.firebaseApp);
-                window.auth = getAuth(window.firebaseApp);
-
                 // Sign in with custom token or anonymously
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(window.auth, __initial_auth_token);
+                if (typeof window.__initial_auth_token !== 'undefined' && window.__initial_auth_token) {
+                    await signInWithCustomToken(window.auth, window.__initial_auth_token);
                 } else {
                     await signInAnonymously(window.auth);
                 }
 
-                // Listen for auth state changes
                 onAuthStateChanged(window.auth, async (user) => {
                     if (user) {
                         window.userId = user.uid;
-                        // Call updateAuthUI to reflect login status and display name
                         await updateAuthUI();
                         console.log("User logged in:", user.uid, user.email);
                     } else {
                         window.userId = null;
-                        // Call updateAuthUI to reflect logout status
                         await updateAuthUI();
                         console.log("User logged out or not authenticated.");
                     }
-                    // Initialize comments listeners after auth state is determined
-                    initArticleCommentsListeners();
+                    if (typeof initArticleCommentsListeners === "function") {
+                        initArticleCommentsListeners();
+                    }
                 });
-
             } catch (error) {
                 console.error("Error initializing Firebase or authentication:", error);
                 window.showMessageBox("Failed to initialize the application. Please try again later.");
