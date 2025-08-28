@@ -35,14 +35,23 @@
         .message-box button { margin-top: 15px; padding: 8px 20px; background-color: #f59e0b; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.2s; }
         .message-box button:hover { background-color: #d97706; }
     </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QE6MXGV84K"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-QE6MXGV84K', {
+        'cookie_domain': 'auto' // <--- Essential for GitHub Pages
+      });
+    </script>
     <!-- Firebase SDK (Version 11.6.1) -->
     <script type="module">
-        import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, addDoc, onSnapshot, collection, query, where, getDocs, serverTimestamp, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
-
-        const firebaseConfig = {
+         import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+         import { getAuth, signInAnonymously, signInWithCustomToken, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+         import { getFirestore, doc, getDoc, setDoc, addDoc, onSnapshot, collection, query, where, getDocs, serverTimestamp, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+         const firebaseConfig = {
             apiKey: "AIzaSyB7hR31yI9qX5JoWXWTR21c2TZU7x_1arE",
             authDomain: "buddhishahi-8cbe9.firebaseapp.com",
             projectId: "buddhishahi-8cbe9",
@@ -59,9 +68,10 @@
         } else {
             app = getApps()[0];
         }
-        const analytics = getAnalytics(app);
+        
         const db = getFirestore(app);
         const auth = getAuth(app);
+
 
         window.firebaseApp = app;
         window.db = db;
