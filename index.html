@@ -130,145 +130,122 @@
         }
     </style>
     <!-- Firebase SDK (Version 11.6.1) -->
-       <script type="module">
-       import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-       import { getAuth, signInAnonymously, signInWithCustomToken, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-       import { getFirestore, doc, getDoc, setDoc, addDoc, onSnapshot, collection, query, where, getDocs, serverTimestamp, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-       import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
+    <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, addDoc, onSnapshot, collection, query, where, getDocs, serverTimestamp, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-       // Your Firebase config
-       const firebaseConfig = {
-         apiKey: "AIzaSyB7hR31yI9qX5JoWXWTR21c2TZU7x_1arE",
-         authDomain: "buddhishahi-8cbe9.firebaseapp.com",
-         projectId: "buddhishahi-8cbe9",
-         storageBucket: "buddhishahi-8cbe9.appspot.com", // <-- fixed typo here ("app" -> "appspot.com")
-         messagingSenderId: "560420979947",
-         appId: "1:560420979947:web:5011cc7e362d0fad05aaae",
-         measurementId: "G-QE6MXGV84K"
-       };
+const firebaseConfig = {
+  apiKey: "AIzaSyB7hR31yI9qX5JoWXWTR21c2TZU7x_1arE",
+  authDomain: "buddhishahi-8cbe9.firebaseapp.com",
+  projectId: "buddhishahi-8cbe9",
+  storageBucket: "buddhishahi-8cbe9.firebasestorage.app",
+  messagingSenderId: "560420979947",
+  appId: "1:560420979947:web:5011cc7e362d0fad05aaae",
+  measurementId: "G-QE6MXGV84K"
+};
 
-       // Initialize Firebase (only once!)
-       let app;
-       if (!getApps().length) {
-        app = initializeApp(firebaseConfig);
-       } else {
-         app = getApps()[0];
-       }
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
+        // Global Firebase instances
+        window.firebaseApp = null;
+        window.db = null;
+        window.auth = null;
+        window.userId = null;
+        window.appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
 
-       // Initialize other Firebase services
-       const analytics = getAnalytics(app);
-       const db = getFirestore(app);
-       const auth = getAuth(app);
+        // Message Box function
+        window.showMessageBox = (message) => {
+            const msgBox = document.getElementById('message-box');
+            const msgText = document.getElementById('message-box-text');
+            msgText.textContent = message;
+            msgBox.style.display = 'flex';
+        };
 
-       // Expose globally if needed
-       window.firebaseApp = app;
-       window.db = db;
-       window.auth = auth;
-       window.userId = null;
-       window.appId = typeof window.__app_id !== 'undefined' ? window.__app_id : 'default-app-id';
+        window.closeMessageBox = () => {
+            document.getElementById('message-box').style.display = 'none';
+        };
 
-       // Utility: Message Box
-       window.showMessageBox = (message) => {
-         const msgBox = document.getElementById('message-box');
-         const msgText = document.getElementById('message-box-text');
-         msgText.textContent = message;
-         msgBox.style.display = 'flex';
-       };
-       window.closeMessageBox = () => {
-         document.getElementById('message-box').style.display = 'none';
-       };
+        // Function to fetch user profile (display name, etc.) from Firestore
+        async function fetchUserProfile(uid) {
+            if (!window.db) return null;
+            // Corrected path: artifacts/{appId}/userProfiles/{userId}
+            const userRef = doc(window.db, 'artifacts', window.appId, 'userProfiles', uid);
+            try {
+                const userSnap = await getDoc(userRef);
+                if (userSnap.exists()) {
+                    return userSnap.data();
+                }
+            } catch (error) {
+                console.error("Error fetching user profile:", error);
+            }
+            return null;
+        }
 
-       // Expose Firebase helpers
-       window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
-       window.signInWithEmailAndPassword = signInWithEmailAndPassword;
-       window.signOut = signOut;
-       window.collection = collection;
-       window.addDoc = addDoc;
-       window.onSnapshot = onSnapshot;
-       window.serverTimestamp = serverTimestamp;
-       window.setDoc = setDoc;
-       window.doc = doc;
-       window.updateDoc = updateDoc;
-       window.deleteDoc = deleteDoc;
+        // Function to update auth UI based on login status and user profile
+        async function updateAuthUI() {
+            if (window.userId && window.auth.currentUser) {
+                const userProfile = await fetchUserProfile(window.userId);
+                const displayName = userProfile?.displayName || window.auth.currentUser.email || 'Guest User';
 
-       // Fetch user profile from Firestore
-       async function fetchUserProfile(uid) {
-         if (!window.db) return null;
-         const userRef = doc(window.db, 'artifacts', window.appId, 'userProfiles', uid);
-         try {
-           const userSnap = await getDoc(userRef);
-           if (userSnap.exists()) {
-             return userSnap.data();
-           }
-         } catch (error) {
-           console.error("Error fetching user profile:", error);
-         }
-         return null;
-       }
-       window.fetchUserProfile = fetchUserProfile;
+                document.getElementById('auth-link').textContent = 'Logout';
+                document.getElementById('auth-link').dataset.action = 'logout';
+                document.getElementById('user-email-display').textContent = `Logged in as: ${displayName}`;
+                document.getElementById('user-email-display').classList.remove('hidden');
 
-       // Auth UI update helper
-       async function updateAuthUI() {
-         if (window.userId && window.auth.currentUser) {
-           const userProfile = await fetchUserProfile(window.userId);
-           const displayName = userProfile?.displayName || window.auth.currentUser.email || 'Guest User';
+                document.getElementById('auth-link-mobile').textContent = 'Logout';
+                document.getElementById('auth-link-mobile').dataset.action = 'logout';
+                document.getElementById('user-email-display-mobile').textContent = `Logged in as: ${displayName}`;
+                document.getElementById('user-email-display-mobile').classList.remove('hidden');
+            } else {
+                document.getElementById('auth-link').textContent = 'Login / Signup';
+                document.getElementById('auth-link').dataset.action = 'login';
+                document.getElementById('user-email-display').classList.add('hidden');
 
-           document.getElementById('auth-link').textContent = 'Logout';
-           document.getElementById('auth-link').dataset.action = 'logout';
-           document.getElementById('user-email-display').textContent = `Logged in as: ${displayName}`;
-           document.getElementById('user-email-display').classList.remove('hidden');
+                document.getElementById('auth-link-mobile').textContent = 'Login / Signup';
+                document.getElementById('auth-link-mobile').dataset.action = 'login';
+                document.getElementById('user-email-display-mobile').classList.add('hidden');
+            }
+        }
 
-           document.getElementById('auth-link-mobile').textContent = 'Logout';
-           document.getElementById('auth-link-mobile').dataset.action = 'logout';
-           document.getElementById('user-email-display-mobile').textContent = `Logged in as: ${displayName}`;
-           document.getElementById('user-email-display-mobile').classList.remove('hidden');
-         } else {
-           document.getElementById('auth-link').textContent = 'Login / Signup';
-           document.getElementById('auth-link').dataset.action = 'login';
-           document.getElementById('user-email-display').classList.add('hidden');
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Initialize Firebase
+                const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+                window.firebaseApp = initializeApp(firebaseConfig);
+                window.db = getFirestore(window.firebaseApp);
+                window.auth = getAuth(window.firebaseApp);
 
-           document.getElementById('auth-link-mobile').textContent = 'Login / Signup';
-           document.getElementById('auth-link-mobile').dataset.action = 'login';
-           document.getElementById('user-email-display-mobile').classList.add('hidden');
-         }
-       }
-       window.updateAuthUI = updateAuthUI;
+                // Sign in with custom token or anonymously
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(window.auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(window.auth);
+                }
 
-       // Main Firebase Auth and Comments Initialization
-       document.addEventListener('DOMContentLoaded', async () => {
-         try {
-           // Sign in with custom token or anonymously
-           if (typeof window.__initial_auth_token !== 'undefined' && window.__initial_auth_token) {
-             await signInWithCustomToken(window.auth, window.__initial_auth_token);
-           } else {
-             await signInAnonymously(window.auth);
-           }
+                // Listen for auth state changes
+                onAuthStateChanged(window.auth, async (user) => {
+                    if (user) {
+                        window.userId = user.uid;
+                        // Call updateAuthUI to reflect login status and display name
+                        await updateAuthUI();
+                        console.log("User logged in:", user.uid, user.email);
+                    } else {
+                        window.userId = null;
+                        // Call updateAuthUI to reflect logout status
+                        await updateAuthUI();
+                        console.log("User logged out or not authenticated.");
+                    }
+                    // Initialize comments listeners after auth state is determined
+                    initArticleCommentsListeners();
+                });
 
-           // Listen for auth state changes
-           onAuthStateChanged(window.auth, async (user) => {
-             if (user) {
-               window.userId = user.uid;
-               await updateAuthUI();
-            console.log("User logged in:", user.uid, user.email);
-             } else {
-               window.userId = null;
-               await updateAuthUI();
-               console.log("User logged out or not authenticated.");
-             }
-             // Initialize comments listeners after auth state is determined
-             if (typeof initArticleCommentsListeners === "function") {
-               initArticleCommentsListeners();
-             }
-           });
- 
-         } catch (error) {
-           console.error("Error initializing Firebase or authentication:", error);
-           window.showMessageBox("Failed to initialize the application. Please try again later.");
-         }
-       });
-
-       // ... keep all your comment functions and other logic as in your original code ...
-        </script>
+            } catch (error) {
+                console.error("Error initializing Firebase or authentication:", error);
+                window.showMessageBox("Failed to initialize the application. Please try again later.");
+            }
+        });
 
         // Function to initialize comment listeners for all articles
         function initArticleCommentsListeners() {
