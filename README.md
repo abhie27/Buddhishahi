@@ -2,7 +2,7 @@
 
 A celebration of Marathi culture, literature, and art.
 
-Visit the website: [https://abhie27.github.io/buddhishahi/](https://abhie27.github.io/buddhishahi/)
+Visit the website: [https://abhie27.github.io/buddhishahi/](https://abhie27.github.io/Buddhishahi/)
 
 ## Features
 
