@@ -131,9 +131,16 @@
     </style>
     <!-- Firebase SDK (Version 11.6.1) -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, addDoc, onSnapshot, collection, query, where, getDocs, serverTimestamp, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        const firebaseConfig = {
+  apiKey: "AIzaSyB7hR31yI9qX5JoWXWTR21c2TZU7x_1arE",
+  authDomain: "buddhishahi-8cbe9.firebaseapp.com",
+  projectId: "buddhishahi-8cbe9",
+  storageBucket: "buddhishahi-8cbe9.firebasestorage.app",
+  messagingSenderId: "560420979947",
+  appId: "1:560420979947:web:5011cc7e362d0fad05aaae",
+  measurementId: "G-QE6MXGV84K"
+};
+
 
         // Global Firebase instances
         window.firebaseApp = null;
