@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A website dedicated to the rich culture, literature, and art of Maharashtra. Explore articles, a photo gallery, and a poetry corner celebrating Marathi heritage.">
+    <meta name="keywords" content="Maharashtra, Marathi, Culture, Literature, Art, History, India, Pu La Deshpande, Yayati">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Tiro+Devanagari+Marathi&family=Yatra+One&display=swap" rel="stylesheet">
+    <title>बुद्धिशाही! | A Celebration of Marathi Culture</title>
+    <style>
+        html {
+            scroll-behavior: smooth; /* Enables smooth scrolling for the whole page */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .logo-font {
+            font-family: 'Tiro Devanagari Marathi', serif;
+        }
+        .artistic-font {
+            font-family: 'Yatra One', cursive;
+        }
+        /* Custom utility to hide scrollbars */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        /* Style for the full-screen hero section */
+        .hero-section {
+            background-image: url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        /* Continuous scroll animation */
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-scroll {
+            animation: scroll 40s linear infinite;
+        }
+        .paused {
+            animation-play-state: paused;
+        }
+
+        /* Lightbox styles */
+        .lightbox {
+            transition: opacity 0.3s ease;
+        }
+        .lightbox img {
+            transition: transform 0.3s ease;
+            max-width: 85vw;
+            max-height: 80vh;
+        }
+
+        /* --- Scramble Typing Effect --- */
+        .animated-heading {
+            position: relative;
+            display: inline-block;
+        }
+        .animated-heading span {
+            display: inline-block;
+            min-width: 0.5em; 
+            text-align: center;
+            transition: color 0.1s ease-in-out, opacity 0.3s ease-in-out;
+        }
+        .animated-heading.typing-done {
+            transition: text-shadow 0.4s ease-in-out; 
+            cursor: pointer;
+        }
+        .animated-heading.typing-done:hover {
+            text-shadow: 0 0 8px var(--glow-color, #ffffff), 
+                            0 0 20px var(--glow-color, #ffffff);
+        }
+        .subheading {
+            color: #ccc;
+            margin-top: 1rem;
+            letter-spacing: 0.2em;
+            opacity: 0;
+            transition: opacity 1.5s ease-out;
+        }
+        .particle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+        }
+        /* Form validation styles */
+        .form-error {
+            color: #ef4444; /* red-500 */
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            max-width: 90vw;
+            text-align: center;
+        }
+        .message-box button {
+            margin-top: 15px;
+            padding: 8px 20px;
+            background-color: #f59e0b; /* amber-500 */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .message-box button:hover {
+            background-color: #d97706; /* amber-600 */
+        }
+    </style>
+    <!-- Firebase SDK (Version 11.6.1) -->
+    <script type="module">...TRUNCATED FOR BREVITY...</script>
+    
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Global Message Box -->
+    <div id="message-box" class="message-box">
+        <p id="message-box-text" class="text-lg font-medium"></p>
+        <button onclick="closeMessageBox()">OK</button>
+    </div>
+    ...TRUNCATED FOR BREVITY...
+</body>
+</html>
